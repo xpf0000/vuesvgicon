@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <span>Paths: </span>
-    <Icons name="memcached" width="50" height="50"></Icons>
+    <Icons name="memcached" color="#cc582c" width="50" height="50"></Icons>
     <span>Polygons: </span>
     <Icons name="polygons" width="50" height="50"></Icons>
     <span>Raw: </span>
@@ -16,10 +16,10 @@
 
     <span>Color: </span>
     <div class="d-flex">
-      <Icons name="raw" class="wh50" style="color: #cc582c"></Icons>
-      <Icons name="raw" class="wh50" style="color: #ccb426"></Icons>
-      <Icons name="raw" class="wh50" style="color: #1487cc"></Icons>
-      <Icons name="raw" class="wh50" style="color: #2fcc52"></Icons>
+      <Icons name="raw" :background-image="true" color="#cc582c" class="wh50 hover"></Icons>
+      <Icons name="raw" class="wh50 hover" style="color: #ccb426"></Icons>
+      <Icons name="raw" class="wh50 hover" style="color: #1487cc"></Icons>
+      <Icons name="raw" class="wh50 hover" style="color: #2fcc52"></Icons>
     </div>
 
     <span>Flip: </span>
@@ -33,14 +33,14 @@
     <span>Animation: </span>
     <div class="d-flex">
       <Icons name="rotate" class="wh50" :spin="true" ></Icons>
-      <Icons name="rotate" class="wh50" :pulse="true" ></Icons>
+      <Icons name="rotate" :background-image="true" class="wh50" :pulse="true" ></Icons>
     </div>
 
   </div>
 </template>
 
 <script>
-import Icons from './components/vue-svg-icons'
+import Icons from '../dist/VueSvgIcons.umd.min'
 import './icon/rotate'
 import './icon/folder'
 import './icon/link'
@@ -87,6 +87,14 @@ export default {
     .d-flex{
       display: flex;
       align-items: baseline;
+    }
+    .hover{
+      transition: all 0.3s;
+      &:hover{
+        width: 80px;
+        height: 80px;
+        transform: rotate(180deg);
+      }
     }
   }
 </style>

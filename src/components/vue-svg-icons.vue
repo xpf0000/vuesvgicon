@@ -3,15 +3,11 @@
     :class="klass"
     :role="label ? 'img' : 'presentation'"
     :aria-label="label"
-    :x="x"
-    :y="y"
-    :width="width"
-    :height="height"
     :viewBox="box"
     :style="style">
-    <slot>
+    <slot v-if="!backgroundImage">
       <template v-if="icon && icon.paths">
-        <path v-for="(path, i) in icon.paths" :key="`path-${i}`" v-bind="path"/>
+        <path v-if="icon && icon.paths" v-for="(path, i) in icon.paths" :key="`path-${i}`" v-bind="path"/>
       </template>
       <template v-if="icon && icon.polygons">
         <polygon v-for="(polygon, i) in icon.polygons" :key="`polygon-${i}`" v-bind="polygon"/>
@@ -59,7 +55,6 @@
 
 <script>
 let icons = {}
-
 export default {
   name: 'fa-icon',
   props: {
@@ -74,7 +69,8 @@ export default {
         return true
       }
     },
-    scale: [Number, String],
+    width: [Number, String],
+    height: [Number, String],
     spin: Boolean,
     pulse: Boolean,
     flip: {
@@ -82,27 +78,15 @@ export default {
         return val === 'h' || val === 'v' || val === 'vh'
       }
     },
-    label: String
+    label: String,
+    backgroundImage: Boolean,
+    color: String
   },
   data () {
     return {
-      x: false,
-      y: false,
-      childrenWidth: 0,
-      childrenHeight: 0,
-      outerScale: 1
     }
   },
   computed: {
-    normalizedScale () {
-      let scale = this.scale
-      scale = typeof scale === 'undefined' ? 1 : Number(scale)
-      if (isNaN(scale) || scale <= 0) {
-        console.warn(`Invalid prop: prop "scale" should be a number over 0.`, this)
-        return this.outerScale
-      }
-      return scale * this.outerScale
-    },
     klass () {
       return {
         'fa-icon': true,
@@ -126,26 +110,53 @@ export default {
       }
       return `0 0 ${this.width} ${this.height}`
     },
-    ratio () {
-      if (!this.icon) {
-        return 1
-      }
-      let { width, height } = this.icon
-      return Math.max(width, height) / 16
-    },
-    width () {
-      return this.childrenWidth || (this.icon && this.icon.width / this.ratio * this.normalizedScale) || 0
-    },
-    height () {
-      return this.childrenHeight || (this.icon && this.icon.height / this.ratio * this.normalizedScale) || 0
-    },
     style () {
-      if (this.normalizedScale === 1) {
-        return false
+      if (this.backgroundImage) {
+        let content = ''
+        if (this.icon && this.icon.paths) {
+          for (let path of this.icon.paths) {
+            let str = ''
+            for (let k in path) {
+              str += `${k}='${path[k]}' `
+            }
+            content += `<path ${str.trim()}/>`
+          }
+        }
+        if (this.icon && this.icon.polygons) {
+          for (let path of this.icon.polygons) {
+            let str = ''
+            for (let k in path) {
+              str += `${k}='${path[k]}' `
+            }
+            content += `<polygon ${str.trim()}/>`
+          }
+        }
+        if (this.icon && this.icon.raw) {
+          let str = ''
+          for (let k in this.icon.g) {
+            str += `${k}='${this.icon.g[k]}' `
+          }
+          content += `<g ${str.trim()}>${this.raw.replace(/"/g, '\'')}</g>`
+        }
+        let code = {
+          '%': '%25',
+          '!': '%21',
+          '@': '%40',
+          '&': '%26',
+          '#': '%23'
+        }
+        let svg = `<svg viewBox='${this.box}' fill='${this.color}' version='1.1' xmlns='http://www.w3.org/2000/svg'>${content}</svg>`
+        for (let k in code) {
+          svg = svg.replace(new RegExp(k, 'g'), code[k])
+        }
+        let css = {
+          'background-image': `url("data:image/svg+xml,${svg}")`,
+          width: this.width,
+          height: this.height
+        }
+        return css
       }
-      return {
-        fontSize: this.normalizedScale + 'em'
-      }
+      return { color: this.color, width: this.width, height: this.height }
     },
     raw () {
       // generate unique id for each icon's SVG element with ID
@@ -172,29 +183,13 @@ export default {
     }
   },
   mounted () {
-    if (!this.name && this.$children.length === 0) {
+    if (!this.name) {
       console.warn(`Invalid prop: prop "name" is required.`)
       return
     }
-
-    if (this.icon) {
-      return
+    if (!this.icon) {
+      console.warn(`Invalid icon: prop "name" is not registed.`)
     }
-
-    let width = 0
-    let height = 0
-    this.$children.forEach(child => {
-      child.outerScale = this.normalizedScale
-
-      width = Math.max(width, child.width)
-      height = Math.max(height, child.height)
-    })
-    this.childrenWidth = width
-    this.childrenHeight = height
-    this.$children.forEach(child => {
-      child.x = (width - child.width) / 2
-      child.y = (height - child.height) / 2
-    })
   },
   register (data) {
     for (let name in data) {

@@ -109,6 +109,17 @@ Used to set a rotate animation to icon, but the best way is to add one yourself
 <Icons name="registName" :spin="true">
 ```
 
+#### background-image
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `false`
+
+in some env, svg tag is not support, but css background-image is support, use this to fix
+
+```html
+<Icons name="registName" :background-image="true" :spin="true">
+```
+
 ## Contributing
 
 Any contribution to the code or any part of the documentation and any idea and/or suggestion are very welcome.

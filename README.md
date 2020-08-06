@@ -36,6 +36,15 @@ import '@xpf0000/vuesvgicon/dist/VueSvgIcons.css'
 import VueSvgIcons from '@xpf0000/vuesvgicon'
 Vue.component('Icons', VueSvgIcons)
 ```
+
+Or in some env, can't use the umd module,like uni-app, so import like this
+
+```js
+import Vue from 'vue'
+import VueSvgIcons from '@xpf0000/vuesvgicon/src/components/vue-svg-icons'
+Vue.component('Icons', VueSvgIcons)
+```
+
 Add svg icon like text.js, you can use any svg code where you can found, like
 https://www.iconfont.cn/
 

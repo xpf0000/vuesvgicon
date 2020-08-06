@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Icons from '../dist/VueSvgIcons.umd.min'
+import Icons from './components/vue-svg-icons'
 import './icon/rotate'
 import './icon/folder'
 import './icon/link'

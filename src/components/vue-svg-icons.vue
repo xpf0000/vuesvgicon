@@ -60,14 +60,11 @@ export default {
   props: {
     name: {
       type: String,
-      validator (val) {
-        if (val && !(val in icons)) {
-          console.warn(`Invalid prop: prop "name" is referring to an unregistered icon "${val}".` +
-            `\nPlease make sure you have imported this icon before using it.`)
-          return false
-        }
-        return true
-      }
+      default: ''
+    },
+    path: {
+      type: String,
+      default: ''
     },
     width: [Number, String],
     height: [Number, String],
@@ -84,7 +81,33 @@ export default {
   },
   data () {
     return {
+      nameKey: ''
     }
+  },
+  watch: {
+    path: {
+      handler (nv) {
+        if (nv) {
+          if (!icons[nv]) {
+            let content = require(`@/${nv}`)
+            let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
+            let viewBox = content.match(viewBoxReg)
+            let width = viewBox[1]
+            let height = viewBox[2]
+            let rawReg = new RegExp('<svg.*?>(.*?)</svg>')
+            let raw = content.match(rawReg)[1]
+            icons[nv] = {
+              'width': width,
+              'height': height,
+              'raw': raw
+            }
+          }
+        }
+      },
+      immediate: true
+    }
+  },
+  created () {
   },
   computed: {
     klass () {
@@ -99,8 +122,8 @@ export default {
       }
     },
     icon () {
-      if (this.name) {
-        return icons[this.name]
+      if (this.name || this.path) {
+        return icons[this.name] || icons[this.path]
       }
       return null
     },

@@ -36,6 +36,11 @@
       <Icons name="rotate" :background-image="true" class="wh50" :pulse="true" ></Icons>
     </div>
 
+    <span>Raw File: </span>
+    <div class="d-flex">
+      <Icons class="wh50" style="color: #1487cc" path="svg/C_dingdan.svg"></Icons>
+      <Icons class="wh50" style="color: #2fcc52" :path="path"></Icons>
+    </div>
   </div>
 </template>
 
@@ -53,7 +58,15 @@ export default {
   components: {
     Icons
   },
+  data () {
+    return {
+      path: 'svg/C_dingdan.svg'
+    }
+  },
   mounted () {
+    setTimeout(_ => {
+      this.path = 'svg/C_fangda.svg'
+    }, 2000)
   }
 }
 </script>

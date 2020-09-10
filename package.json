@@ -1,6 +1,6 @@
 {
   "name": "@xpf0000/vuesvgicon",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "250881478@qq.com",
   "main": "dist/VueSvgIcons.umd.min.js",
   "unpkg": "dist/VueSvgIcons.umd.min.js",
@@ -28,7 +28,8 @@
     "sass-loader": "^8.0.2",
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.42.1"
+    "webpack": "^4.42.1",
+    "svg-inline-loader": "^0.8.2"
   },
   "files": [
     "/dist/*",
@@ -52,5 +53,7 @@
     "component",
     "svg",
     "icon"
-  ]
+  ],
+  "dependencies": {
+  }
 }

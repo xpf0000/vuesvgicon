@@ -64,12 +64,20 @@ Icon.register({
 })
 ```
 
+or use raw svg file, use the path prop like:
+```vue
+<template>
+    <Icons path="svg/C_fangda.svg"></Icons>
+</template>
+```
+
 You may now use the component in your markup
 
 ```vue
 <template>
   <div>
    <Icons name="text"></Icons>
+   <Icons path="svg/C_fangda.svg"></Icons>
   </div>
 </template>
 
@@ -88,12 +96,21 @@ export default {
 #### name
 Type: `String`<br>
 Required: `true`<br>
-validator: `must registed`<br>
 
 Used to set which svg icon to use
 
 ```html
 <Icons name="registName">
+```
+
+#### path
+Type: `String`<br>
+Required: `true`<br>
+
+use raw svg file, will find from path @/
+
+```html
+<Icons path="svg/C_fangda.svg">
 ```
 
 #### flip

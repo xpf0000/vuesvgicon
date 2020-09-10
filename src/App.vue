@@ -40,6 +40,7 @@
     <div class="d-flex">
       <Icons class="wh50" style="color: #1487cc" path="svg/C_dingdan.svg"></Icons>
       <Icons class="wh50" style="color: #2fcc52" :path="path"></Icons>
+      <Icons class="wh50" style="color: #1487cc"></Icons>
     </div>
   </div>
 </template>

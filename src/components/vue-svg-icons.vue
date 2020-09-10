@@ -4,6 +4,7 @@
     :role="label ? 'img' : 'presentation'"
     :aria-label="label"
     :viewBox="box"
+       v-if="icon"
     :style="style">
     <slot v-if="!backgroundImage">
       <template v-if="icon && icon.paths">

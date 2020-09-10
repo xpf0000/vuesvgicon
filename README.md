@@ -64,10 +64,10 @@ Icon.register({
 })
 ```
 
-or use raw svg file, use the path prop like:
+or use raw svg file, use the content prop like:
 ```vue
 <template>
-    <Icons path="svg/C_fangda.svg"></Icons>
+    <Icons :content="import('@/svg/C_fangda.svg')"></Icons>
 </template>
 ```
 
@@ -103,14 +103,14 @@ Used to set which svg icon to use
 <Icons name="registName">
 ```
 
-#### path
-Type: `String`<br>
+#### content
+Type: [`String`, `Promise`]<br>
 Required: `true`<br>
 
-use raw svg file, will find from path @/
+use raw svg file
 
 ```html
-<Icons path="svg/C_fangda.svg">
+<Icons :content="import('@/svg/C_fangda.svg')"></Icons>
 ```
 
 #### flip

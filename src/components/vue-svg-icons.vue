@@ -63,10 +63,7 @@ export default {
       type: String,
       default: ''
     },
-    path: {
-      type: String,
-      default: ''
-    },
+    content: [String, Promise],
     width: [Number, String],
     height: [Number, String],
     spin: Boolean,
@@ -82,26 +79,21 @@ export default {
   },
   data () {
     return {
-      nameKey: ''
+      iconHash: ''
     }
   },
   watch: {
-    path: {
+    content: {
       handler (nv) {
         if (nv) {
-          if (!icons[nv]) {
-            let content = require(`@/${nv}`)
-            let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
-            let viewBox = content.match(viewBoxReg)
-            let width = viewBox[1]
-            let height = viewBox[2]
-            let rawReg = new RegExp('<svg.*?>(.*?)</svg>')
-            let raw = content.match(rawReg)[1]
-            icons[nv] = {
-              'width': width,
-              'height': height,
-              'raw': raw
-            }
+          console.log('nv: ', nv)
+          if (typeof nv === 'string') {
+            this.initFromContent(nv)
+          } else {
+            nv.then(res => {
+              console.log('res: ', res)
+              this.initFromContent(res.default)
+            })
           }
         }
       },
@@ -109,6 +101,38 @@ export default {
     }
   },
   created () {
+  },
+  methods: {
+    hashCode (str) {
+      str = str.toLowerCase()
+      let hash = 1315423911
+      let i
+      let ch
+      for (i = str.length - 1; i >= 0; i--) {
+        ch = str.charCodeAt(i)
+        hash ^= ((hash << 5) + ch + (hash >> 2))
+      }
+      return (hash & 0x7FFFFFFF)
+    },
+    initFromContent (nv) {
+      let hash = this.hashCode(nv)
+      this.iconHash = hash
+      console.log('hash: ', hash)
+      if (!icons[hash]) {
+        let content = nv
+        let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
+        let viewBox = content.match(viewBoxReg)
+        let width = viewBox[1]
+        let height = viewBox[2]
+        let rawReg = new RegExp('<svg.*?>(.*?)</svg>')
+        let raw = content.match(rawReg)[1]
+        icons[hash] = {
+          'width': width,
+          'height': height,
+          'raw': raw
+        }
+      }
+    }
   },
   computed: {
     klass () {
@@ -123,8 +147,8 @@ export default {
       }
     },
     icon () {
-      if (this.name || this.path) {
-        return icons[this.name] || icons[this.path]
+      if (this.name || this.iconHash) {
+        return icons[this.name] || icons[this.iconHash]
       }
       return null
     },

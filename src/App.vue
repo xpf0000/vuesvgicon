@@ -38,8 +38,8 @@
 
     <span>Raw File: </span>
     <div class="d-flex">
-      <Icons class="wh50" style="color: #1487cc" path="svg/C_dingdan.svg"></Icons>
-      <Icons class="wh50" style="color: #2fcc52" :path="path"></Icons>
+      <Icons class="wh50" style="color: #1487cc" :content="import('@/svg/C_dingdan.svg')"></Icons>
+      <Icons class="wh50" style="color: #2fcc52" :content="path"></Icons>
       <Icons class="wh50" style="color: #1487cc"></Icons>
     </div>
   </div>
@@ -61,12 +61,12 @@ export default {
   },
   data () {
     return {
-      path: 'svg/C_dingdan.svg'
+      path: import('@/svg/C_dingdan.svg')
     }
   },
   mounted () {
     setTimeout(_ => {
-      this.path = 'svg/C_fangda.svg'
+      this.path = import('@/svg/C_fangda.svg')
     }, 2000)
   }
 }

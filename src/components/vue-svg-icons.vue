@@ -86,12 +86,10 @@ export default {
     content: {
       handler (nv) {
         if (nv) {
-          console.log('nv: ', nv)
           if (typeof nv === 'string') {
             this.initFromContent(nv)
           } else {
             nv.then(res => {
-              console.log('res: ', res)
               this.initFromContent(res.default)
             })
           }
@@ -117,7 +115,6 @@ export default {
     initFromContent (nv) {
       let hash = this.hashCode(nv)
       this.iconHash = hash
-      console.log('hash: ', hash)
       if (!icons[hash]) {
         let content = nv
         let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
@@ -231,12 +228,8 @@ export default {
     }
   },
   mounted () {
-    if (!this.name) {
-      console.warn(`Invalid prop: prop "name" is required.`)
-      return
-    }
     if (!this.icon) {
-      console.warn(`Invalid icon: prop "name" is not registed.`)
+      console.warn(`Invalid icon`)
     }
   },
   register (data) {

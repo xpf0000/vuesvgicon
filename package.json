@@ -1,6 +1,6 @@
 {
   "name": "@xpf0000/vuesvgicon",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "250881478@qq.com",
   "main": "dist/VueSvgIcons.umd.min.js",
   "unpkg": "dist/VueSvgIcons.umd.min.js",

@@ -119,6 +119,9 @@ export default {
         let content = nv
         let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
         let viewBox = content.match(viewBoxReg)
+        if (!viewBox || viewBox.length < 3) {
+          return
+        }
         let width = viewBox[1]
         let height = viewBox[2]
         let rawReg = new RegExp('<svg.*?>(.*?)</svg>')

@@ -144,7 +144,7 @@ export default {
       if (typeof res === 'number') {
         res += 'px'
       } else if (typeof res === 'string') {
-        if (res.indexOf('px') < 0 && res.indexOf('em') < 0) {
+        if (res.indexOf('px') < 0 && res.indexOf('em') < 0 && res.indexOf('%') < 0) {
           res += 'px'
         }
       }

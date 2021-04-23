@@ -11,7 +11,7 @@
       <Icons label="AAABBBCCC"  name="folder" width="12" height="12"></Icons>
       <Icons name="folder" width="24" height="24"></Icons>
       <Icons name="folder" width="48" height="48"></Icons>
-      <Icons name="folder" width="64" height="64"></Icons>
+      <Icons name="folder" class="wh64"></Icons>
     </div>
 
     <span>Color: </span>
@@ -84,6 +84,10 @@ export default {
   .wh50{
     width: 50px;
     height: 50px;
+  }
+  .wh64 {
+    width: 64px;
+    height: 64px;
   }
   #app{
     height: 100%;

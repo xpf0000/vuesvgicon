@@ -66,11 +66,11 @@ export default {
     content: [String, Promise],
     width: {
       type: [Number, String],
-      default: 40
+      default: undefined
     },
     height: {
       type: [Number, String],
-      default: 40
+      default: undefined
     },
     spin: Boolean,
     pulse: Boolean,

@@ -64,8 +64,14 @@ export default {
       default: ''
     },
     content: [String, Promise],
-    width: [Number, String],
-    height: [Number, String],
+    width: {
+      type: [Number, String],
+      default: 40
+    },
+    height: {
+      type: [Number, String],
+      default: 40
+    },
     spin: Boolean,
     pulse: Boolean,
     flip: {
@@ -132,6 +138,17 @@ export default {
           'raw': raw
         }
       }
+    },
+    fixSize (val) {
+      let res = val
+      if (typeof res === 'number') {
+        res += 'px'
+      } else if (typeof res === 'string') {
+        if (res.indexOf('px') < 0 && res.indexOf('em') < 0) {
+          res += 'px'
+        }
+      }
+      return res
     }
   },
   computed: {
@@ -159,6 +176,8 @@ export default {
       return `0 0 ${this.width} ${this.height}`
     },
     style () {
+      let width = this.fixSize(this.width)
+      let height = this.fixSize(this.height)
       if (this.backgroundImage) {
         let content = ''
         if (this.icon && this.icon.paths) {
@@ -199,12 +218,12 @@ export default {
         }
         let css = {
           'background-image': `url("data:image/svg+xml,${svg}")`,
-          width: this.width,
-          height: this.height
+          width: width,
+          height: height
         }
         return css
       }
-      return { color: this.color, width: this.width, height: this.height }
+      return { color: this.color, width: width, height: height }
     },
     raw () {
       // generate unique id for each icon's SVG element with ID
@@ -230,11 +249,7 @@ export default {
       return raw
     }
   },
-  mounted () {
-    if (!this.icon) {
-      console.warn(`Invalid icon`)
-    }
-  },
+  mounted () {},
   register (data) {
     for (let name in data) {
       let icon = data[name]

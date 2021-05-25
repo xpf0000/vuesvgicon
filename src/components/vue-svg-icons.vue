@@ -123,19 +123,23 @@ export default {
       this.iconHash = hash
       if (!icons[hash]) {
         let content = nv
-        let viewBoxReg = new RegExp('viewBox="0 0 (.*?) (.*?)"')
+        let viewBoxReg = new RegExp('viewBox="(.*?) (.*?) (.*?) (.*?)"')
         let viewBox = content.match(viewBoxReg)
-        if (!viewBox || viewBox.length < 3) {
+        if (!viewBox || viewBox.length < 5) {
           return
         }
-        let width = viewBox[1]
-        let height = viewBox[2]
+        let x = viewBox[1]
+        let y = viewBox[2]
+        let width = viewBox[3]
+        let height = viewBox[4]
         let rawReg = new RegExp('<svg.*?>(.*?)</svg>')
         let raw = content.match(rawReg)[1]
         icons[hash] = {
-          'width': width,
-          'height': height,
-          'raw': raw
+          x: x,
+          y: y,
+          width: width,
+          height: height,
+          raw: raw
         }
       }
     },
@@ -171,9 +175,9 @@ export default {
     },
     box () {
       if (this.icon) {
-        return `0 0 ${this.icon.width} ${this.icon.height}`
+        return `${this.icon.x || 0} ${this.icon.y || 0} ${this.icon.width} ${this.icon.height}`
       }
-      return `0 0 ${this.width} ${this.height}`
+      return `0 0 1024 1024`
     },
     style () {
       let width = this.fixSize(this.width)

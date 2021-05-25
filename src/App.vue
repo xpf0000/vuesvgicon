@@ -41,6 +41,9 @@
       <Icons class="wh50" style="color: #1487cc" :content="import('@/svg/C_dingdan.svg')"></Icons>
       <Icons class="wh50" style="color: #2fcc52" :content="path"></Icons>
       <Icons class="wh50" style="color: #1487cc"></Icons>
+      <Icons class="wh50" style="color: #1487cc" :content="import('@/svg/flex-h.svg')"></Icons>
+      <Icons class="wh50" style="color: #1487cc" :content="import('@/svg/flex-v.svg')"></Icons>
+      <Icons class="wh50" style="color: #1487cc" :content="import('@/svg/flex-h-center.svg')"></Icons>
     </div>
   </div>
 </template>

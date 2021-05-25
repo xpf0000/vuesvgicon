@@ -1,6 +1,6 @@
 {
   "name": "@xpf0000/vuesvgicon",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "author": "250881478@qq.com",
   "main": "src/components/index.js",
   "unpkg": "src/components/index.js",

@@ -6,15 +6,13 @@
     :viewBox="box"
        v-if="icon"
     :style="style">
-    <slot v-if="!backgroundImage">
-      <template v-if="icon && icon.paths">
+      <template v-if="!backgroundImage && icon && icon.paths">
         <path v-if="icon && icon.paths" v-for="(path, i) in icon.paths" :key="`path-${i}`" v-bind="path"/>
       </template>
-      <template v-if="icon && icon.polygons">
+      <template v-else-if="!backgroundImage && icon && icon.polygons">
         <polygon v-for="(polygon, i) in icon.polygons" :key="`polygon-${i}`" v-bind="polygon"/>
       </template>
-      <template v-if="icon && icon.raw"><g v-html="raw" v-bind="icon.g"></g></template>
-    </slot>
+      <template v-else-if="!backgroundImage && icon && icon.raw"><g v-html="raw" v-bind="icon.g"></g></template>
   </svg>
 </template>
 
